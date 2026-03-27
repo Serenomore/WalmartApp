@@ -17,28 +17,43 @@ public final class SalaryManager {
     private static final int MINIMUN_WAGE = 1750905;
     private static final int TRANSPORTATION_SUBSIDY = 249095;
 
-    public static double calculateNetSalary(int grossSalary, ArrayList<Bonus> bonuses) {
+    public static double calculateNetSalary(double grossSalary, ArrayList<Bonus> bonuses, ArrayList<Deduction> deductiones) {
         double salary = 0;
-        int totalBonus = 0;
-        if (!(bonuses.isEmpty())) {
-            for (int i = 0; i < bonuses.size(); i++) {
-                totalBonus += bonuses.get(i).getValue();
+        int totalDeductiones = 0;
+        if (!(deductiones.isEmpty())) {
+            for (int i = 0; i < deductiones.size(); i++) {
+                totalDeductiones += deductiones.get(i).getValue();
             }
         }
         if (grossSalary <= MINIMUN_WAGE * 2) {
-            salary = (grossSalary) * 0.92 + TRANSPORTATION_SUBSIDY + totalBonus;
+            salary = (grossSalary)-totalDeductiones;
         } else {
             if (grossSalary < MINIMUN_WAGE * 4) {
-                salary = (grossSalary) * 0.92 + totalBonus;
+                salary = (grossSalary)-totalDeductiones;
             } else {
                 if (grossSalary < MINIMUN_WAGE * 10) {
-                    salary = (grossSalary) * 0.91 + totalBonus;
+                    salary = (grossSalary)-totalDeductiones;
                 } else {
-                    salary = (grossSalary * 0.7) * 0.91 + totalBonus;
+                    salary = (grossSalary)-totalDeductiones;
                 }
             }
         }
         return salary;
+    }
+    public static int getTransportationSubsidy(int basicSalary){
+        int transportationSubsidy = 0;
+        
+        if(basicSalary<MINIMUN_WAGE*2){
+            transportationSubsidy =  TRANSPORTATION_SUBSIDY;
+        }
+        return transportationSubsidy;
+    }
+    public static double calculateGrossSalary(int basicSalary, ArrayList<Bonus> bonuses ) {
+    int totalBonuses = 0;    
+    for (int i=0; i<bonuses.size(); i++){
+            totalBonuses += bonuses.get(i).getValue();
+        }
+        return totalBonuses+basicSalary;
     }
     public static double calculateHealthDiscount(int grossSalary) {
         return grossSalary * 0.04;

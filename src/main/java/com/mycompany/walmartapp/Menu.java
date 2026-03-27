@@ -80,7 +80,7 @@ public class Menu {
                     JOptionPane.showMessageDialog(null, "El nuevo cargo se guardó correctamente");
                     break;
                 case "6":
-                    JOptionPane.showMessageDialog(null,positionManager.getPositions().getFirst().getNamePosition());
+                    showPositions(positionManager);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Opción incorrecta, intente de nuevo");
@@ -93,8 +93,8 @@ public class Menu {
         int hours;
         double hourValue = 0;
         int basicSalary;
-        ArrayList<Bonus> bonuses = new ArrayList<Bonus>();
-        ArrayList<Deduction> deductiones = new ArrayList<Deduction>();
+        ArrayList<Bonus> bonuses = new ArrayList<>();
+        ArrayList<Deduction> deductiones = new ArrayList<>();
         int answer = 0;
         String[] contractTypes = {"Término fijo","Término indefinido"};
         name = ReadGUI.readString("Ingrese el nombre del nuevo cargo");
@@ -115,9 +115,29 @@ public class Menu {
                 break;
             }
         }
+        int transportationSubsidy = SalaryManager.getTransportationSubsidy(basicSalary);
+        if(transportationSubsidy!=0){
+            Bonus newBonus = new Bonus();
+               newBonus.setName("Auxilio de transporte");
+               newBonus.setValue(transportationSubsidy);
+               bonuses.add(newBonus);
+        }
         SalaryManager.calculateDeductions(deductiones, basicSalary);
-        Position newPosition = new Position(name, contract, hours, hourValue, bonuses,SalaryManager.calculateDeductions(deductiones, basicSalary));
+        Position newPosition = new Position(name, contract, hours, basicSalary, bonuses,deductiones);
+        double grossSalary = SalaryManager.calculateGrossSalary(basicSalary, bonuses);
+        double netSalary = SalaryManager.calculateNetSalary(grossSalary, bonuses, deductiones);
+        newPosition.setGrossSalary(grossSalary);
+        newPosition.setNetSalary(netSalary);
         return newPosition;
+    }
+    public void showPositions(PositionManager positionManager){
+        String positionsInfo = "";
+        for (int i=0;i<positionManager.getPositions().size();i++){
+            positionsInfo += i+1+". "+positionManager.getPositions().get(i).getNamePosition()+"\n";
+        }
+        int chosenOP = ReadGUI.readInt("Ingrese el número del cargo para ver los detalles:\n"+positionsInfo);
+        
+        JOptionPane.showMessageDialog(null,positionManager.getPositions().get(chosenOP-1).getPositionInformation());
     }
 }
 

@@ -16,16 +16,34 @@ public class Position {
     private int monthlyHours;
     private int basicSalary;
     private double hourValue;
+    private double grossSalary;
+    private double netSalary;
     private ArrayList<Bonus> bonuses;
     private ArrayList<Deduction> deductiones;
 
-    public Position(String namePosition, int typeOfContract, int monthlyHours, double hourValue, ArrayList<Bonus> bonuses, ArrayList<Deduction> deductiones) {
+    public Position(String namePosition, int typeOfContract, int monthlyHours, int basicSalary ,ArrayList<Bonus> bonuses, ArrayList<Deduction> deductiones) {
         this.namePosition = namePosition;
         this.typeOfContract = typeOfContract;
         this.monthlyHours = monthlyHours;
-        this.hourValue = hourValue;
         this.bonuses = bonuses;
         this.deductiones = deductiones;
+        this.basicSalary = basicSalary;
+    }
+
+    public double getNetSalary() {
+        return netSalary;
+    }
+
+    public void setNetSalary(double netSalary) {
+        this.netSalary = netSalary;
+    }
+    
+    public double getGrossSalary() {
+        return grossSalary;
+    }
+
+    public void setGrossSalary(double grossSalary) {
+        this.grossSalary = grossSalary;
     }
 
     public int getBasicSalary() {
@@ -83,6 +101,23 @@ public class Position {
     public void setHourValue(double hourValue) {
         this.hourValue = hourValue;
     }
-    
-    
+    public String getPositionInformation(){
+        String information = "";
+        information += "Nombre del cargo: "+namePosition+"\n";
+        String contractName = (typeOfContract==0)? "Término fijo": "Término indefinido";
+        information += "Tipo de contrato: "+contractName+"\n";
+        information += "Salario base: "+basicSalary+"\n";
+        information += "Horas mensuales: "+monthlyHours+"\n";
+        information += "Salario bruto: "+grossSalary+"\n";
+        information += "\t+Salario base: "+basicSalary+"\n";
+        for (int i=0; i<bonuses.size(); i++){
+            information += "\t+"+bonuses.get(i).getName()+": "+bonuses.get(i).getValue()+"\n";
+        }
+        information += "Salario neto: "+netSalary+"\n";
+        information += "\t+Salario bruto: "+grossSalary+"\n";
+         for (int i=0; i<deductiones.size(); i++){
+            information += "\t-"+deductiones.get(i).getName()+": "+deductiones.get(i).getValue()+"\n";
+        }
+    return information;
+    }
 }
