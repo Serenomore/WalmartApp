@@ -14,17 +14,26 @@ public class Position {
     private String namePosition;
     private int typeOfContract;
     private int monthlyHours;
-    private int hourValue;
+    private int basicSalary;
+    private double hourValue;
     private ArrayList<Bonus> bonuses;
     private ArrayList<Deduction> deductiones;
 
-    public Position(String namePosition, int typeOfContract, int monthlyHours, int hourValue, ArrayList<Bonus> bonuses, Arraylist<Deduction> deductiones) {
+    public Position(String namePosition, int typeOfContract, int monthlyHours, double hourValue, ArrayList<Bonus> bonuses, ArrayList<Deduction> deductiones) {
         this.namePosition = namePosition;
         this.typeOfContract = typeOfContract;
         this.monthlyHours = monthlyHours;
         this.hourValue = hourValue;
         this.bonuses = bonuses;
         this.deductiones = deductiones;
+    }
+
+    public int getBasicSalary() {
+        return basicSalary;
+    }
+
+    public void setBasicSalary(int basicSalary) {
+        this.basicSalary = basicSalary;
     }
 
     public ArrayList<Bonus> getBonuses() {
@@ -67,11 +76,11 @@ public class Position {
         this.monthlyHours = monthlyHours;
     }
 
-    public int getHourValue() {
+    public double getHourValue() {
         return hourValue;
     }
 
-    public void setHourValue(int hourValue) {
+    public void setHourValue(double hourValue) {
         this.hourValue = hourValue;
     }
     

@@ -4,6 +4,8 @@
  */
 package com.mycompany.walmartapp;
 import Utilities.ReadGUI;
+import Utilities.SalaryManager;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
@@ -77,30 +79,46 @@ public class Menu {
                     positionManager.addNewPosition(addPosition());
                     JOptionPane.showMessageDialog(null, "El nuevo cargo se guardó correctamente");
                     break;
-                    
+                case "6":
+                    JOptionPane.showMessageDialog(null,positionManager.getPositions().getFirst().getNamePosition());
                 default:
                     JOptionPane.showMessageDialog(null, "Opción incorrecta, intente de nuevo");
             }
         }
-    
-    
     }
     public Position addPosition(){
         String name;
         int contract;
         int hours;
-        int hourValue;
+        double hourValue = 0;
+        int basicSalary;
+        ArrayList<Bonus> bonuses = null;
+        ArrayList<Deduction> deductiones = null;
+        int answer = 0;
         String[] contractTypes = {"Término fijo","Término indefinido"};
         name = ReadGUI.readString("Ingrese el nombre del nuevo cargo");
         contract = ReadGUI.readOptions("Tipo de contrato:", "Seleccion una opción", contractTypes);
+        basicSalary = ReadGUI.readInt("Ingrese el salario base del cargo");
         hours = ReadGUI.readInt("Ingrese la cantidad de horas mensuales");
-        hourValue = ReadGUI.readInt("Ingrese el valor por hora");
-        Position newPosition = new Position(name, contract, hours, hourValue);
-        return newPosition;
-        
+        hourValue = basicSalary/hours;
+        while(answer == 0){
+            answer = JOptionPane.showConfirmDialog(null,"¿Desea agregar un bono extralegal");
+            if(answer==0){
+               Bonus newBonus = null;
+               newBonus.setName(ReadGUI.readString("Ingrese el nombre del nuevo bono"));
+               newBonus.setValue(ReadGUI.readInt("Ingrese el valor del bono"));
+               bonuses.add(newBonus);
+               JOptionPane.showMessageDialog(null,"Bono registrado correctamente");
+            }
+            else{
+                break;
+            }
         }
-           
+        SalaryManager.calculateDeductions(deductiones, basicSalary);
+        Position newPosition = new Position(name, contract, hours, hourValue, bonuses,SalaryManager.calculateDeductions(deductiones, basicSalary));
+        return newPosition;
     }
+}
 
 
 
