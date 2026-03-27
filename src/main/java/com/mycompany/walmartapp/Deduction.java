@@ -16,7 +16,10 @@ public class Deduction {
         this.name = name;
         this.value = value;
     }
-
+    public Deduction() {
+        this.name = "";
+        this.value = 0;
+    }
     public String getName() {
         return name;
     }

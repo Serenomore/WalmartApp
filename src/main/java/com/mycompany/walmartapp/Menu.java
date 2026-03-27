@@ -22,7 +22,7 @@ public class Menu {
         PositionManager positionManager = new PositionManager();
 
         while (op) {
-            option = JOptionPane.showInputDialog("*****************\nMENÚ PRINCIPAL\n*****************\n\nIngrese el número de la opción deseada\n\n1. Registrar candidato\n2. Mostrar listado de Candidatos APTOS\n3. Mostrar listad de candidatos NO APTOS \n4. Entrevistar candidato\n5. Agregar nuevo cargo");
+            option = JOptionPane.showInputDialog("*****************\nMENÚ PRINCIPAL\n*****************\n\nIngrese el número de la opción deseada\n\n1. Registrar candidato\n2. Mostrar listado de Candidatos APTOS\n3. Mostrar listad de candidatos NO APTOS \n4. Entrevistar candidato\n5. Agregar nuevo cargo\n6. Ver detalles de los cargos");
             switch (option) {
                 case "1":
                     Candidate pj = new Candidate();
@@ -81,6 +81,7 @@ public class Menu {
                     break;
                 case "6":
                     JOptionPane.showMessageDialog(null,positionManager.getPositions().getFirst().getNamePosition());
+                    break;
                 default:
                     JOptionPane.showMessageDialog(null, "Opción incorrecta, intente de nuevo");
             }
@@ -92,8 +93,8 @@ public class Menu {
         int hours;
         double hourValue = 0;
         int basicSalary;
-        ArrayList<Bonus> bonuses = null;
-        ArrayList<Deduction> deductiones = null;
+        ArrayList<Bonus> bonuses = new ArrayList<Bonus>();
+        ArrayList<Deduction> deductiones = new ArrayList<Deduction>();
         int answer = 0;
         String[] contractTypes = {"Término fijo","Término indefinido"};
         name = ReadGUI.readString("Ingrese el nombre del nuevo cargo");
@@ -104,7 +105,7 @@ public class Menu {
         while(answer == 0){
             answer = JOptionPane.showConfirmDialog(null,"¿Desea agregar un bono extralegal");
             if(answer==0){
-               Bonus newBonus = null;
+               Bonus newBonus = new Bonus();
                newBonus.setName(ReadGUI.readString("Ingrese el nombre del nuevo bono"));
                newBonus.setValue(ReadGUI.readInt("Ingrese el valor del bono"));
                bonuses.add(newBonus);

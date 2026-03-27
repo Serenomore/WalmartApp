@@ -16,7 +16,10 @@ public class Bonus {
         this.name = name;
         this.value = value;
     }
-
+    public Bonus() {
+        this.name = "";
+        this.value = 0;
+    }
     public String getName() {
         return name;
     }

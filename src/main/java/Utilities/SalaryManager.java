@@ -55,8 +55,8 @@ public final class SalaryManager {
     }
     public static ArrayList<Deduction> calculateDeductions(ArrayList<Deduction> deductiones, int grossSalary) {
         if (grossSalary < MINIMUN_WAGE * 4) {
-            Deduction d1 = null;
-            Deduction d2 = null;
+            Deduction d1 = new Deduction();
+            Deduction d2 = new Deduction();
             d1.setValue(calculatePensionDiscount(grossSalary));
             d1.setName("Pensión");
             d2.setValue(calculateHealthDiscount(grossSalary));
@@ -65,9 +65,9 @@ public final class SalaryManager {
             deductiones.add(d2);
         } else {
             if (grossSalary >= MINIMUN_WAGE * 4 && grossSalary < MINIMUN_WAGE * 10) {
-                Deduction d1 = null;
-                Deduction d2 = null;
-                Deduction d3 = null;
+                Deduction d1 = new Deduction();
+                Deduction d2 = new Deduction();
+                Deduction d3 = new Deduction();
                 d1.setValue(calculatePensionDiscount(grossSalary));
                 d1.setName("Pensión");
                 d2.setValue(calculateHealthDiscount(grossSalary));
